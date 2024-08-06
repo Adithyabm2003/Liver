@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liver Tumor Detection</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header, footer {
+            background-color: #007bff;
+            color: white;
+        }
+        header {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+        }
+        footer {
+            margin-top: 40px;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .container-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .upload-section, .results, .about, .faq {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        .upload-section:hover, .results:hover, .about:hover, .faq:hover {
+            transform: translateY(-5px);
+        }
+        .upload-section, .results {
+            flex: 1 1 45%;
+            margin: 10px;
+        }
+        .about, .faq {
+            flex: 1 1 100%;
+        }
+        .faq div p:first-child {
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        @media (max-width: 768px) {
+            .upload-section, .results {
+                flex: 1 1 100%;
+                margin-right: 0;
+                margin-left: 0;
+            }
+        }
+        .faq {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .faq div {
+            cursor: pointer;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s;
+        }
+        .faq div:hover {
+            background-color: #f7f7f7;
+        }
+        .faq div:last-child {
+            border-bottom: none;
+        }
+        .faq div p {
+            margin: 0;
+        }
+        .faq div p.answer {
+            display: none;
+            margin-top: 10px;
+        }
+        .faq div.open p.answer {
+            display: block;
+        }
+        .faq div p.question::after {
+            content: ' ▼';
+            float: right;
+        }
+        .faq div.open p.question::after {
+            content: ' ▲';
+        }
+    </style>
+</head>
+<body>
+    <header class="py-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="logo h3 mb-0">LiverScan™</div>
+            <div class="search-bar d-flex">
+                <input type="text" class="form-control mr-2" placeholder="Search">
+                <button class="btn btn-light">Search</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container my-5">
+        <div class="container-flex">
+            <section class="upload-section text-center">
+                <h1 class="mb-4">Liver Tumor Detection</h1>
+                <div class="upload-form">
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" class="form-control" id="age" name="age" placeholder="Enter your age">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select class="form-control" id="gender" name="gender">
+                                <option value="">Select your gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="upload">Upload Scan</label>
+                            <input type="file" class="form-control-file" id="upload" name="file">
+                        </div>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="results">
+                <h2 class="mb-4">Results</h2>
+                <p>{{ result if result else "No results yet." }}</p>
+            </section>
+        </div>
+
+        <section class="about mb-4">
+            <h1 class="mb-4">About Us</h1>
+            <p>Welcome to LiverScan™, a pioneer in advanced liver tumor detection. Our mission is to improve liver health through innovative and accurate diagnostic solutions.</p>
+            
+            <h2 class="mb-4">Who We Are</h2>
+            <p>LiverScan™ is a leading medical technology company founded by experts in hepatology, radiology, and AI. We are dedicated to enhancing liver disease diagnosis with cutting-edge tools and technology.</p>
+            
+            <h2 class="mb-4">Our Technology</h2>
+            <p>Utilizing AI and advanced imaging techniques, our software detects liver tumors early and accurately. Our platform integrates seamlessly with existing medical imaging systems, providing reliable and actionable insights.</p>
+            
+            <h2 class="mb-4">Why Choose Us</h2>
+            <ul>
+                <li><strong>Accuracy:</strong> High sensitivity and specificity for reliable detection.</li>
+                <li><strong>Early Detection:</strong> Enables timely treatment and better patient outcomes.</li>
+                <li><strong>User-Friendly:</strong> Easy integration into clinical workflows.</li>
+            </ul>
+            
+            <p>Join us in the fight against liver disease. For more information, contact us at [Contact Information].</p>
+        </section>
+
+        <section class="faq">
+            <h2 class="mb-4">FAQ</h2>
+            <div>
+                <p class="question"><strong>What is LiverScan™?</strong></p>
+                <p class="answer">LiverScan™ is an advanced diagnostic tool designed to detect liver tumors early and accurately using AI and state-of-the-art imaging techniques.</p>
+            </div>
+            <div>
+                <p class="question"><strong>How does LiverScan™ work?</strong></p>
+                <p class="answer">Our technology analyzes medical images with deep learning algorithms to identify abnormalities in the liver. The software integrates with existing imaging systems to provide real-time, actionable insights.</p>
+            </div>
+            <div>
+                <p class="question"><strong>Who can use LiverScan™?</strong></p>
+                <p class="answer">LiverScan™ is designed for use by healthcare professionals, including hepatologists, radiologists, and general practitioners, to enhance their diagnostic capabilities.</p>
+            </div>
+            <div>
+                <p class="question"><strong>Is LiverScan™ easy to integrate into existing workflows?</strong></p>
+                <p class="answer">Yes, LiverScan™ is designed to be user-friendly and easily integrates into existing clinical workflows, requiring minimal training and setup.</p>
+            </div>
+            <div>
+                <p class="question"><strong>What are the benefits of early detection of liver tumors?</strong></p>
+                <p class="answer">Early detection of liver tumors allows for timely intervention, which can significantly improve treatment outcomes and increase the chances of successful recovery.</p>
+            </div>
+            <div>
+                <p class="question"><strong>How accurate is LiverScan™?</strong></p>
+                <p class="answer">Our technology has high sensitivity and specificity, making it highly reliable for detecting liver tumors at various stages of development.</p>
+            </div>
+            <div>
+                <p class="question"><strong>Is my data secure with LiverScan™?</strong></p>
+                <p class="answer">Yes, we prioritize data security and comply with all relevant regulations to ensure your data is protected and handled with the utmost care.</p>
+            </div>
+            <div>
+                <p class="question"><strong>How can I get in touch for more information?</strong></p>
+                <p class="answer">You can contact us through our website's contact page or email us directly at [Contact Information]. We are here to assist you with any questions or support you may need.</p>
+            </div>
+        </section>
+        
+    </main>
+
+    <footer class="py-3">
+        <div class="container">
+            <p class="mb-1">Follow us on</p>
+            <p>Facebook | Twitter | Instagram</p>
+            <p class="mt-3">© 2024 LiverScan™. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.querySelectorAll('.faq div').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('open');
+            });
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
